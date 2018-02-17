@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class KG : Unit {
 
-    private new void Awake()
+    protected new void Awake()
     {
         base.Awake();
     }
