@@ -84,7 +84,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_GenerateMotionCurves: 0
   m_Events:
-  - time: 0.46666667
+  - time: 0.26666668
     functionName: AttackAnimationIsEnd
     data: 
     objectReferenceParameter: {fileID: 0}

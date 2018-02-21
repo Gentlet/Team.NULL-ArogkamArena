@@ -60,7 +60,7 @@ public class CustosAttack : UnitAttack {
 
                 Vector2 vel = Unit.Rigid.velocity;
 
-                vel.x = 20f * (Unit.transform.rotation.eulerAngles.y == 180 ? 1 : -1);
+                vel.x = 20f * (isRight ? 1 : -1);
 
                 Unit.Rigid.velocity = vel;
 
@@ -91,7 +91,7 @@ public class CustosAttack : UnitAttack {
 
                 Vector2 vel = Unit.Rigid.velocity;
 
-                vel.x = 15f * (Unit.transform.rotation.eulerAngles.y == 180 ? 1 : -1);
+                vel.x = 15f * (isRight ? 1 : -1);
 
                 Unit.Rigid.velocity = vel;
 
@@ -130,7 +130,7 @@ public class CustosAttack : UnitAttack {
             Unit.Animator.PlayAnimation("Skill2");
             Unit.ColliderCtrl.AttackColliderActive(properties[8]);
 
-            Unit.Rigid.velocity = new Vector2(6f * (Unit.transform.rotation.eulerAngles.y == 180 ? 1 : -1), 18f);
+            Unit.Rigid.velocity = new Vector2(6f * (isRight ? 1 : -1), 18f);
         }
 
         if (keys[(int)KeyArray.special] == keyState.KeyDown.ToChar() && !Unit.Movement.isJump)
@@ -144,7 +144,7 @@ public class CustosAttack : UnitAttack {
 
             Vector2 pos = transform.position;
 
-            pos.x += 10f * (Unit.transform.rotation.eulerAngles.y == 180 ? 1 : -1);
+            pos.x += 10f * (isRight ? 1 : -1);
 
             if(!(GameManager.Instance.StageSize.x < pos.x && pos.x < GameManager.Instance.StageSize.z))
             {

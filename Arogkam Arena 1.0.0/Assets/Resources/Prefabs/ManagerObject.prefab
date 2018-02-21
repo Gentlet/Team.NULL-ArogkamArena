@@ -81,6 +81,10 @@ MonoBehaviour:
     hp: 0
     speed: 5
     jump_force: 25
+  - name: KG
+    hp: 0
+    speed: 5
+    jump_force: 25
 --- !u!114 &114978194076866786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -92,3 +96,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f2923e458832f24e8251e8284f7d864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stagesize: {x: -18, y: -11, z: 18, w: 11}
+  hitparticle: {fileID: 0}
+  attackparticle:
+  - name: KG_Skill2_L
+    particle: {fileID: 1562689976297276, guid: b4185d695b46e594dbf8621aea5762f3, type: 2}
+  - name: KG_Skill2_R
+    particle: {fileID: 1562689976297276, guid: aa4fb09b888d3df41989b8781c3d5d52, type: 2}
+  - name: KG_Strong_L
+    particle: {fileID: 1587021277670980, guid: 0623784ebf03a4c42a82635f73c17f32, type: 2}
+  - name: KG_Strong_R
+    particle: {fileID: 1587021277670980, guid: fbcf8ae31410ada49a9e26d8542aed8a, type: 2}

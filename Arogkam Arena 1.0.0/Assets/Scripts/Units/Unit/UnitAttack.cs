@@ -183,5 +183,13 @@ public abstract class UnitAttack : ChildUnitInterface
             return isattacking;
         }
     }
+
+    public bool isRight
+    {
+        get
+        {
+            return (Unit.transform.rotation.eulerAngles.y == 180 ? true : false);
+        }
+    }
 #endregion
 }

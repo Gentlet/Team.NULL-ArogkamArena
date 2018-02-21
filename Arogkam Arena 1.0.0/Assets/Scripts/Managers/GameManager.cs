@@ -2,13 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class AttackEffect
+{
+    [SerializeField]
+    private string name;
+    [SerializeField]
+    private GameObject particle;
+
+    #region Properties
+    public string Name
+    {
+        get
+        {
+            return name;
+        }
+    }
+
+    public GameObject Particle
+    {
+        get
+        {
+            return particle;
+        }
+    }
+    #endregion
+}
+
 public class GameManager : SingletonGameObject<GameManager> {
 
     [SerializeField]
     private Vector4 stagesize;
 
     [SerializeField]
-    private GameObject HitParticle;
+    private GameObject hitparticle;
+
+    [SerializeField]
+    private AttackEffect[] attackparticle;
 
     private Unit[] players;
 
@@ -18,7 +48,7 @@ public class GameManager : SingletonGameObject<GameManager> {
     {
         attackproperties = new List<AttackProperties[]>();
     }
-
+    //select players unit
     public void SetPlayer(Unit unit)
     {
         if (players == null)
@@ -32,6 +62,7 @@ public class GameManager : SingletonGameObject<GameManager> {
             Debug.LogError("'unit's tag' data is not correct in GameManager's SetPlayer Function");
     }
 
+    //return another player unit
     public Unit GetAnotherPlayer(string tag)
     {
         if(players == null)
@@ -58,15 +89,17 @@ public class GameManager : SingletonGameObject<GameManager> {
         return null;
     }
 
+    //return hitparticle
     public void CreateHitParticle(Vector2 pos)
     {
-        GameObject obj = Instantiate(HitParticle, transform);
+        GameObject obj = Instantiate(hitparticle, transform);
 
         obj.transform.position = pos + new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-1f, 1f));
 
         StartCoroutine(DestroyObj(obj, 0.5f));
     }
 
+    //select players unit's attackproperties
     public void AttackPropertiesSet(string tag, AttackProperties[] properties)
     {
         if (tag == "Player1")
@@ -85,6 +118,7 @@ public class GameManager : SingletonGameObject<GameManager> {
         return;
     }
 
+    //return attackproperties
     public AttackProperties GetAttackProperties(string tag, string name)
     {
         int num;
@@ -109,8 +143,43 @@ public class GameManager : SingletonGameObject<GameManager> {
         Debug.LogError(name + " is not correct in GetAttackProperties function");
         return null;
     }
+    //return attackparticle
+    #region public_GameObject_CreateAttackParticle
+    public GameObject CreateAttackParticle(string name, float destroytime)
+    {
+        for (int i = 0; i < attackparticle.Length; i++)
+        {
+            if (attackparticle[i].Name == name)
+            {
+                GameObject particle = Instantiate(attackparticle[i].Particle);
 
+                StartCoroutine(DestroyObj(particle.gameObject, destroytime));
+                return particle;
+            }
+        }
 
+        Debug.LogError(name + " is not correct in GameManager's CreateAttackParticle Function");
+        return null;
+    }
+    public GameObject CreateAttackParticle(string name, GameObject parent, float destroytime)
+    {
+        for (int i = 0; i < attackparticle.Length; i++)
+        {
+            if (attackparticle[i].Name == name)
+            {
+                GameObject particle = Instantiate(attackparticle[i].Particle, parent.transform);
+
+                StartCoroutine(DestroyObj(particle.gameObject, destroytime));
+                return particle;
+            }
+        }
+
+        Debug.LogError(name + " is not correct in GameManager's CreateAttackParticle Function");
+        return null;
+    }
+    #endregion
+
+    //destroy wait for second
     private IEnumerator DestroyObj(GameObject obj, float time)
     {
         yield return new WaitForSeconds(time);

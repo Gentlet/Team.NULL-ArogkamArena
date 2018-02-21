@@ -65,7 +65,7 @@ public class KGAttack : UnitAttack {
                 Unit.ColliderCtrl.AttackColliderActive(properties[1]);
 
                 Vector2 vel = Unit.Rigid.velocity;
-                vel.x = 20f * (Unit.transform.rotation.eulerAngles.y == 180 ? 1 : -1);
+                vel.x = 20f * (isRight ? 1 : -1);
                 Unit.Rigid.velocity = vel;
                 Unit.Movement.isDash = false;
             }
@@ -89,10 +89,9 @@ public class KGAttack : UnitAttack {
 
             if (Unit.Movement.isDash && !Unit.Movement.isJump)
             {
-                // Unit.Animator.PlayAnimation("DefanceBreak");
+                Unit.Animator.PlayAnimation("DefanceBreak");
                 // Unit.ColliderCtrl.AttackColliderActive(properties[4]);
                 Debug.Log("방어깨기가 구현되어있지 않음");
-                Vector2 vel = Unit.Rigid.velocity;
             }
             else
             {
@@ -100,6 +99,10 @@ public class KGAttack : UnitAttack {
 
                 Unit.Animator.PlayAnimation("StrongAttack" + strongattackcombo.ToString());
                 Unit.ColliderCtrl.AttackColliderActive(properties[5]);
+
+                GameObject obj = GameManager.Instance.CreateAttackParticle("KG_Strong_" + (isRight ? "R" : "L"), gameObject, 0.5f);
+
+                obj.transform.localPosition = new Vector3(-1f, 0.15f, -0.05f);
 
                 if (strongattackcombo == EndofStrongCombo)
                     strongattackcombo = 0;
@@ -115,7 +118,7 @@ public class KGAttack : UnitAttack {
 
             Unit.Animator.PlayAnimation("Skill1");
             Vector2 vel = Unit.Rigid.velocity;
-            vel.x = 25f * (Unit.transform.rotation.eulerAngles.y == 180 ? 1 : -1);
+            vel.x = 25f * (isRight ? 1 : -1);
             Unit.Rigid.velocity = vel;
             Unit.ColliderCtrl.AttackColliderActive(properties[6]);
         }
@@ -125,8 +128,6 @@ public class KGAttack : UnitAttack {
             isattacking = true;
             isattackdelaying = true;
             Unit.State = UnitState.Attack;
-
-            StartCoroutine(AccelerationDelay(new Vector2((Unit.transform.rotation.eulerAngles.y == 180 ? 20 : -20), 25), 0.1f));
 
             Unit.Animator.PlayAnimation("Skill2");
             Unit.ColliderCtrl.AttackColliderActive(properties[7]);

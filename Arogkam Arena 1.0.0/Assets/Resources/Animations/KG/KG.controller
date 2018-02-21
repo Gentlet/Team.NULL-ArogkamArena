@@ -676,7 +676,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: DefenceBreak
+  m_Name: DefanceBreak
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -728,7 +728,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Defence
+  m_Name: Defance
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -840,25 +840,25 @@ AnimatorStateMachine:
     m_Position: {x: 384, y: -36, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102136163315571480}
-    m_Position: {x: 624, y: -96, z: 0}
+    m_Position: {x: 708, y: -96, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102797196621196754}
-    m_Position: {x: 888, y: 120, z: 0}
+    m_Position: {x: 972, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102865223784219626}
-    m_Position: {x: 888, y: 180, z: 0}
+    m_Position: {x: 972, y: 180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102858315877936852}
-    m_Position: {x: 792, y: -36, z: 0}
+    m_Position: {x: 876, y: -36, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102229263218798242}
-    m_Position: {x: 864, y: 36, z: 0}
+    m_Position: {x: 948, y: 36, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102682299892735828}
-    m_Position: {x: 744, y: 264, z: 0}
+    m_Position: {x: 828, y: 264, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102163973359314260}
-    m_Position: {x: 744, y: 324, z: 0}
+    m_Position: {x: 828, y: 324, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
