@@ -91,16 +91,13 @@ public abstract class Unit : MonoBehaviour {
 
     public virtual void Hit(Unit unit)
     {
-        if (!(unit.CompareTag("Wall") || unit.CompareTag("Ground")))
-        {
-            //Debug.Log("hit : " + unit.ColliderCtrl.ActiveColliderName);
+        //Debug.Log("hit : " + unit.ColliderCtrl.ActiveColliderName);
 
-            AttackProperties property = GameManager.Instance.GetAttackProperties(unit.tag, unit.ColliderCtrl.ActiveColliderName);
+        AttackProperties property = GameManager.Instance.GetAttackProperties(unit.tag, unit.ColliderCtrl.ActiveColliderName);
 
-            status.hp -= property.damage;
+        status.hp -= property.damage;
 
-            GameManager.Instance.CreateHitParticle(transform.position);
-        }
+        GameManager.Instance.CreateHitParticle(transform.position);
     }
 
     #region Properties

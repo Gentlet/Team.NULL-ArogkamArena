@@ -12,7 +12,7 @@ public class UnitAttackReport : MonoBehaviour {
     {
         //Debug.LogWarning("report before : " + collision.name);
 
-        if (!collision.CompareTag(tag) && collision.name != "Foot" && collision.name != "Ground") 
+        if (!collision.CompareTag(tag) && collision.name != "Foot" && collision.name != "Ground" && collision.name != "Wall") 
         {
             //Debug.Log("report : " + collision.name);
             GameManager.Instance.GetAnotherPlayer(unit.tag).Hit(unit);

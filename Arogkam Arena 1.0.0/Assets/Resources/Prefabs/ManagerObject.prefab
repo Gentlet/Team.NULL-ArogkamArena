@@ -85,6 +85,10 @@ MonoBehaviour:
     hp: 0
     speed: 5
     jump_force: 25
+  - name: Western
+    hp: 0
+    speed: 5
+    jump_force: 25
 --- !u!114 &114978194076866786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -97,7 +101,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stagesize: {x: -18, y: -11, z: 18, w: 11}
-  hitparticle: {fileID: 0}
+  hitparticle: {fileID: 1279200476476100, guid: 671f90d2cf06c4a4b8a3a163b8d9ec39,
+    type: 2}
   attackparticle:
   - name: KG_Skill2_L
     particle: {fileID: 1562689976297276, guid: b4185d695b46e594dbf8621aea5762f3, type: 2}
