@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class WesternAttack : UnitAttack
 {
+    [SerializeField]
+    private float speed;
 
     private void Update()
     {
         Attack();
 
         DebugManager.Instance.listInit("IsAttacking", isAttacking.ToString());
-    }
-
+        DebugManager.Instance.listInit("IsAttackDelay", isattackdelaying.ToString());
+    } 
 
     protected override void Attack()
     {
@@ -53,6 +55,10 @@ public class WesternAttack : UnitAttack
             {
                 Unit.Animator.PlayAnimation("JumpAttack");
                 Unit.ColliderCtrl.AttackColliderActive(properties[0]);
+
+                StartCoroutine(CreateBullet(new Vector2(-1f, -1f) * speed, new Vector2(-0.35f, 0.13f), 45f, 0.05f));
+
+                StartCoroutine(AccelerationDelay(new Vector2(0,10f), 0f));
             }
             else if (Unit.Movement.isDash)
             {
@@ -88,7 +94,7 @@ public class WesternAttack : UnitAttack
             if (Unit.Movement.isDash && !Unit.Movement.isJump)
             {
                 Unit.Animator.PlayAnimation("DefanceBreak");
-                // Unit.ColliderCtrl.AttackColliderActive(properties[4]);
+                //Unit.ColliderCtrl.AttackColliderActive(properties[4]);
                 Debug.Log("방어깨기가 구현되어있지 않음");
             }
             else
@@ -97,6 +103,8 @@ public class WesternAttack : UnitAttack
 
                 Unit.Animator.PlayAnimation("StrongAttack" + strongattackcombo.ToString());
                 Unit.ColliderCtrl.AttackColliderActive(properties[5]);
+
+                StartCoroutine(CreateBullet(new Vector2(-1f, 0) * speed, new Vector2(-0.7f, 0.35f), 0, 0.1f));
 
                 if (strongattackcombo == EndofStrongCombo)
                     strongattackcombo = 0;
@@ -122,9 +130,12 @@ public class WesternAttack : UnitAttack
             Unit.State = UnitState.Attack;
 
             Unit.Animator.PlayAnimation("Skill2");
-            //Unit.ColliderCtrl.AttackColliderActive(properties[7]);
+            Unit.ColliderCtrl.AttackColliderActive(properties[7]);
 
-            Unit.Rigid.velocity = new Vector2(6f * (isRight ? 1 : -1), 18f);
+            StartCoroutine(CreateBullet(new Vector2(-1f, 0) * speed, new Vector2(-0.7f, 0.35f), 0, 0.02f));
+
+            StartCoroutine(AccelerationDelay(new Vector2(15 * (isRight == true ? -1f : 1f), Unit.Rigid.velocity.y), 0f));
+            
         }
 
         if (keys[(int)KeyArray.special] == keyState.KeyDown.ToChar() && !Unit.Movement.isJump)
@@ -159,6 +170,20 @@ public class WesternAttack : UnitAttack
         //{
         //}
         #endregion
+    }
+
+    private IEnumerator CreateBullet(Vector2 direction, Vector2 pos,float rotation, float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        BulletAttackReport bullet = GameManager.Instance.CreateBullet(Unit);
+
+        if (isRight)
+            direction.x *= -1f;
+
+        bullet.Rigid.velocity = direction;
+        bullet.transform.position = (Vector2)transform.position + pos;
+        bullet.transform.rotation = Quaternion.Euler(bullet.transform.eulerAngles.x, (isRight == true ? 180f : 0f), rotation);
     }
 
     #region Properties

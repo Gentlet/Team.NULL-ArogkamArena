@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
+public class HitProperties
+{
+    public Vector2 knockback;
+    public float hitdelay;
+    public bool stun;
+}
+
+[System.Serializable]
 public class AttackProperties
 {
     public string name;
@@ -11,6 +19,8 @@ public class AttackProperties
     public float during;
     public int times;
     public float damage;
+
+    public HitProperties hitProperties;
 }
 
 public abstract class UnitAttack : ChildUnitInterface
@@ -28,7 +38,9 @@ public abstract class UnitAttack : ChildUnitInterface
     protected int weakattackcombo;
     protected int strongattackcombo;
 
+    [SerializeField]
     protected bool isattacking;
+    [SerializeField]
     protected bool isattackdelaying;
 
     private void Start()

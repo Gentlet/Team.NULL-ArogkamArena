@@ -112,3 +112,5 @@ MonoBehaviour:
     particle: {fileID: 1587021277670980, guid: 0623784ebf03a4c42a82635f73c17f32, type: 2}
   - name: KG_Strong_R
     particle: {fileID: 1587021277670980, guid: fbcf8ae31410ada49a9e26d8542aed8a, type: 2}
+  bulletprefab: {fileID: 114036228397230116, guid: dce5efc571ed66e4dbe8dd57b7322cb9,
+    type: 2}

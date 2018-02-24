@@ -292,6 +292,7 @@
     <Compile Include="Assets\Scripts\Units\Characters\KG\KG.cs" />
     <Compile Include="Assets\Scripts\Units\Characters\KG\KGAttack.cs" />
     <Compile Include="Assets\Scripts\Units\Characters\KG\KGMovement.cs" />
+    <Compile Include="Assets\Scripts\Units\Characters\Western\Bullet\BulletAttackReport.cs" />
     <Compile Include="Assets\Scripts\Units\Characters\Western\Western.cs" />
     <Compile Include="Assets\Scripts\Units\Characters\Western\WesternAttack.cs" />
     <Compile Include="Assets\Scripts\Units\Characters\Western\WesternMovement.cs" />

@@ -40,6 +40,9 @@ public class GameManager : SingletonGameObject<GameManager> {
     [SerializeField]
     private AttackEffect[] attackparticle;
 
+    [SerializeField]
+    private BulletAttackReport bulletprefab;
+
     private Unit[] players;
 
     private List<AttackProperties[]> attackproperties;
@@ -48,7 +51,6 @@ public class GameManager : SingletonGameObject<GameManager> {
     {
         attackproperties = new List<AttackProperties[]>();
     }
-    //select players unit
     public void SetPlayer(Unit unit)
     {
         if (players == null)
@@ -62,7 +64,6 @@ public class GameManager : SingletonGameObject<GameManager> {
             Debug.LogError("'unit's tag' data is not correct in GameManager's SetPlayer Function");
     }
 
-    //return another player unit
     public Unit GetAnotherPlayer(string tag)
     {
         if(players == null)
@@ -89,7 +90,6 @@ public class GameManager : SingletonGameObject<GameManager> {
         return null;
     }
 
-    //return hitparticle
     public void CreateHitParticle(Vector2 pos)
     {
         GameObject obj = Instantiate(hitparticle, transform);
@@ -99,7 +99,6 @@ public class GameManager : SingletonGameObject<GameManager> {
         StartCoroutine(DestroyObj(obj, 0.5f));
     }
 
-    //select players unit's attackproperties
     public void AttackPropertiesSet(string tag, AttackProperties[] properties)
     {
         if (tag == "Player1")
@@ -118,7 +117,6 @@ public class GameManager : SingletonGameObject<GameManager> {
         return;
     }
 
-    //return attackproperties
     public AttackProperties GetAttackProperties(string tag, string name)
     {
         int num;
@@ -143,7 +141,15 @@ public class GameManager : SingletonGameObject<GameManager> {
         Debug.LogError(name + " is not correct in GetAttackProperties function");
         return null;
     }
-    //return attackparticle
+
+    public BulletAttackReport CreateBullet(Unit unit)
+    {
+        BulletAttackReport bullet = Instantiate(bulletprefab);
+        bullet.SetUnit(unit);
+
+        return bullet;
+    }
+    
     #region public_GameObject_CreateAttackParticle
     public GameObject CreateAttackParticle(string name, float destroytime)
     {
@@ -179,7 +185,6 @@ public class GameManager : SingletonGameObject<GameManager> {
     }
     #endregion
 
-    //destroy wait for second
     private IEnumerator DestroyObj(GameObject obj, float time)
     {
         yield return new WaitForSeconds(time);
