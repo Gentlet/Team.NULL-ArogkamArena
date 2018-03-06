@@ -13,7 +13,10 @@ public struct Status
 
     public float jump_force;
 
-#region Properties
+    [HideInInspector]
+    public int bustmodstate;
+
+    #region Properties
     public string Name
     {
         get

@@ -89,13 +89,26 @@ public abstract class Unit : MonoBehaviour {
         tmp.tag = transform.tag;
     }
 
+    private void BustMod(bool state)
+    {
+        if (state && status.bustmodstate != 1)
+        {
+            status.bustmodstate = 2;
+        }
+        else if (!state && status.bustmodstate == 2)
+        {
+            status.bustmodstate = 1;
+        }
+    }
+
     public virtual void Hit(Unit unit)
     {
-        //Debug.Log("hit : " + unit.ColliderCtrl.ActiveColliderName);
-
         AttackProperties property = GameManager.Instance.GetAttackProperties(unit.tag, unit.ColliderCtrl.ActiveColliderName);
 
-        status.hp -= property.damage;
+        status.hp -= property.damage + (property.damage * (unit.status.bustmodstate == 2 ? 0.1f : 0f));
+        
+        if (status.hp < 30f)
+            BustMod(true);
 
         GameManager.Instance.CreateHitParticle(transform.position);
     }

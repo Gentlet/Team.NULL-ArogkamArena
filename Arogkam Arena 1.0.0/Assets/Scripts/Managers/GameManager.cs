@@ -43,6 +43,9 @@ public class GameManager : SingletonGameObject<GameManager> {
     [SerializeField]
     private BulletAttackReport bulletprefab;
 
+    [SerializeField]
+    private GameObject bustmodparitcle;
+
     private Unit[] players;
 
     private List<AttackProperties[]> attackproperties;
@@ -184,6 +187,27 @@ public class GameManager : SingletonGameObject<GameManager> {
         return null;
     }
     #endregion
+
+    public GameObject CreateBustModParticle(Unit unit)
+    {
+        GameObject obj = Instantiate(bustmodparitcle, unit.transform);
+
+        obj.tag = "BustMod";
+        obj.transform.localPosition = new Vector3(0f, 0.5f, 0f);
+
+        return obj;
+    }
+
+    public void RemoveBustModParticle(Unit unit)
+    {
+        for (int i = 0; i < unit.transform.childCount; i++)
+        {
+            if(unit.transform.GetChild(i).CompareTag("BustMod"))
+            {
+                StartCoroutine(DestroyObj(unit.transform.GetChild(i).gameObject, 0f));
+            }
+        }
+    }
 
     private IEnumerator DestroyObj(GameObject obj, float time)
     {
