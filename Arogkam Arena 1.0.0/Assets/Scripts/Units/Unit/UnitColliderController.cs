@@ -114,6 +114,9 @@ public class UnitColliderController : ChildUnitInterface
 
     public  void MovemetColliderActive(string name)
     {
+        if (activecollidername == name)
+            return;
+
         AllColliderActiveFalse();
 
         for (int i = 0; i < colliders.Length; i++)
@@ -136,6 +139,9 @@ public class UnitColliderController : ChildUnitInterface
             Debug.LogError("Collider is already Actived");
             return;
         }
+
+        if (activecollidername == proerties.name)
+            return;
 
         for (int i = 0; i < colliders.Length; i++)
         {

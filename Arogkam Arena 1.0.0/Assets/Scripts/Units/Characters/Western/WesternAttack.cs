@@ -104,7 +104,7 @@ public class WesternAttack : UnitAttack
                 Unit.Animator.PlayAnimation("StrongAttack" + strongattackcombo.ToString());
                 Unit.ColliderCtrl.AttackColliderActive(properties[5]);
 
-                StartCoroutine(CreateBullet(new Vector2(-1f, 0) * speed, new Vector2(-0.7f, 0.35f), 0, 0.1f));
+                StartCoroutine(CreateBullet(new Vector2(-1f, 0) * speed, new Vector2(-1.1f * (isRight ? -1f : 1f), 0.37f), 0, 0.1f));
 
                 if (strongattackcombo == EndofStrongCombo)
                     strongattackcombo = 0;
