@@ -16,12 +16,9 @@ public class BulletAttackReport : MonoBehaviour
     {
         if (unit == null) return;
 
-        //Debug.LogWarning("report before : " + collision.name);
-
         if (!collision.CompareTag(tag) && collision.name != "Foot" && collision.name != "Ground" && collision.name != "Walls")
         {
-            //Debug.Log("report : " + collision.name);
-            GameManager.Instance.GetAnotherPlayer(unit.tag).Hit(unit);
+            GameManager.Instance.GetAnotherPlayer(unit.tag).BulletHit(unit, this);
         }
 
         if (!collision.CompareTag(tag))

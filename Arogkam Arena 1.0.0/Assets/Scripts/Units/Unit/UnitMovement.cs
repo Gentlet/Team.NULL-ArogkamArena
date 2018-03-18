@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class UnitMovement : ChildUnitInterface {
-    
+public abstract class UnitMovement : ChildUnitInterface
+{
+
     protected int isdash;
 
     protected bool isjump;
@@ -37,16 +38,21 @@ public abstract class UnitMovement : ChildUnitInterface {
         }
     }
 
-    void Start () {
-	}
-	
-	void Update () {
+    void Start()
+    {
+    }
+
+    void Update()
+    {
         Movement();
 
     }
 
     protected void Movement()
     {
+        if (Unit.Stuning)
+            return;
+
         DebugManager.Instance.listInit("IsJump", isjump.ToString());
 
         if (Unit.Attack.isAttacking)
@@ -54,9 +60,9 @@ public abstract class UnitMovement : ChildUnitInterface {
 
         string keys = KeyManager.Instance.GetKeys(Unit.tag);
 
-        Vector2 vel = Vector2.zero;
+        Vector2 vel = Unit.Rigid.velocity;
 
-        vel.y = Unit.Rigid.velocity.y;
+        //vel.y = Unit.Rigid.velocity.y;
 
         isdefance = false;
         Unit.State = UnitState.Idle;
@@ -74,10 +80,12 @@ public abstract class UnitMovement : ChildUnitInterface {
             Unit.Animator.PlayAnimation("Defance");
             Unit.ColliderCtrl.MovemetColliderActive("Defance");
 
+            vel = Vector2.zero;
+
             isdefance = true;
         }
 
-         if (keys[(int)KeyArray.Up] == keyState.KeyStay.ToChar() && !isdefance)
+        if (keys[(int)KeyArray.Up] == keyState.KeyStay.ToChar() && !isdefance)
         {
             if (!isjump)
             {
@@ -106,7 +114,7 @@ public abstract class UnitMovement : ChildUnitInterface {
             }
             Unit.transform.rotation = Quaternion.Euler(Unit.transform.rotation.eulerAngles.x, 180, Unit.transform.rotation.eulerAngles.z);
 
-            vel.x += Unit.Status.speed * (isdash == 2 ? 2 : 1);
+            vel.x = Unit.Status.speed * (isdash == 2 ? 2 : 1) * (Unit.Attack.isRight ? 1f : -1f);
         }
 
         if (keys[(int)KeyArray.Left] == keyState.KeyStay.ToChar() && !isdefance)
@@ -123,7 +131,7 @@ public abstract class UnitMovement : ChildUnitInterface {
             }
             Unit.transform.rotation = Quaternion.Euler(Unit.transform.rotation.eulerAngles.x, 0, Unit.transform.rotation.eulerAngles.z);
 
-            vel.x -= Unit.Status.speed * (isdash == 2 ? 2 : 1);
+            vel.x = Unit.Status.speed * (isdash == 2 ? 2 : 1) * (Unit.Attack.isRight ? 1f : -1f);
         }
         #endregion
 
@@ -137,7 +145,7 @@ public abstract class UnitMovement : ChildUnitInterface {
         //        {
 
         //        }
-#endregion
+        #endregion
 
         #region KeyUp
         if (keys[(int)KeyArray.Right] == keyState.KeyUp.ToChar() && !isdefance)
@@ -163,7 +171,7 @@ public abstract class UnitMovement : ChildUnitInterface {
             else
                 isdash = 0;
         }
-#endregion
+        #endregion
 
         Unit.Rigid.velocity = vel;
     }
@@ -208,5 +216,5 @@ public abstract class UnitMovement : ChildUnitInterface {
             return isdefance;
         }
     }
-#endregion
+    #endregion
 }

@@ -21,7 +21,8 @@ public enum UnitState
     Down,
 }
 
-public abstract class Unit : MonoBehaviour {
+public abstract class Unit : MonoBehaviour
+{
     [SerializeField]
     protected string unitname;
 
@@ -37,7 +38,14 @@ public abstract class Unit : MonoBehaviour {
     protected UnitMovement movement;
     protected UnitColliderController colliderctrl;
 
-    protected void Awake () {
+    protected bool stuning;
+    protected bool hitdelay;
+
+    private Coroutine chargedelay;
+    private Coroutine charge;
+
+    protected void Awake()
+    {
         GameManager.Instance.SetPlayer(this);
 
         rigid = GetComponent<Rigidbody2D>();
@@ -45,6 +53,10 @@ public abstract class Unit : MonoBehaviour {
         shadow = transform.GetChild(0).gameObject;
 
         status = StatusManager.Instance.GetStatus(UnitName);
+        status.hp = 100f;
+        status.stamina = 100f;
+
+
         state = UnitState.Idle;
 
         ChildSetting(transform);
@@ -64,11 +76,11 @@ public abstract class Unit : MonoBehaviour {
 
         shadow.transform.parent = null;
         StartCoroutine(Shadow());
-	}
+    }
 
     private IEnumerator Shadow()
     {
-        while(true)
+        while (true)
         {
             shadow.transform.position = new Vector2(transform.position.x, -3.722509f);
 
@@ -94,10 +106,68 @@ public abstract class Unit : MonoBehaviour {
         if (state && status.bustmodstate != 1)
         {
             status.bustmodstate = 2;
+            GameManager.Instance.CreateBustModParticle(this);
         }
         else if (!state && status.bustmodstate == 2)
         {
             status.bustmodstate = 1;
+            GameManager.Instance.RemoveBustModParticle(this);
+        }
+    }
+
+    private IEnumerator StunDelay(float time)
+    {
+        stuning = true;
+        Animator.PlayAnimation("Stun");
+        GameObject particle = GameManager.Instance.CreateSunParticle(this);
+
+        yield return new WaitForSeconds(time);
+
+        stuning = false;
+        Destroy(particle);
+    }
+
+    private IEnumerator HitDelay(float time)
+    {
+        hitdelay = true;
+        Animator.PlayAnimation("Hit");
+
+        yield return new WaitForSeconds(time);
+
+        hitdelay = false;
+    }
+
+    public void UseStamina(float value)
+    {
+        status.stamina -= value;
+        GameManager.Instance.SetFillAmount(transform.tag + "Stamina", status.stamina / 100f);
+
+        if (chargedelay != null)
+            StopCoroutine(chargedelay);
+        if (charge != null)
+            StopCoroutine(charge);
+
+        chargedelay = StartCoroutine(ChargeStainadelay());
+    }
+
+    private IEnumerator ChargeStainadelay()
+    {
+        yield return new WaitForSeconds(0.7f);
+
+        charge = StartCoroutine(ChargeStaina());
+    }
+
+    private IEnumerator ChargeStaina()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.01f);
+
+            status.stamina += 0.4f;
+            GameManager.Instance.SetFillAmount(transform.tag + "Stamina", status.stamina / 100f);
+
+            if (100f <= status.stamina)
+                break;
         }
     }
 
@@ -105,12 +175,40 @@ public abstract class Unit : MonoBehaviour {
     {
         AttackProperties property = GameManager.Instance.GetAttackProperties(unit.tag, unit.ColliderCtrl.ActiveColliderName);
 
+        Hit(unit, property);
+    }
+
+    public virtual void BulletHit(Unit unit, BulletAttackReport bullet)
+    {
+        AttackProperties property = GameManager.Instance.GetAttackProperties(unit.tag, bullet.name);
+
+        Hit(unit, property);
+    }
+
+    protected virtual void Hit(Unit unit, AttackProperties property)
+    {
         status.hp -= property.damage + (property.damage * (unit.status.bustmodstate == 2 ? 0.1f : 0f));
-        
+
+        GameManager.Instance.SetFillAmount(transform.tag + "Hp", status.hp / 100f);
+
         if (status.hp < 30f)
             BustMod(true);
 
         GameManager.Instance.CreateHitParticle(transform.position);
+
+        Vector2 knockback = property.hitProperties.knockback;
+
+        knockback.x = knockback.x * (Attack.isRight ? -1f : 1f);
+
+        transform.rotation = Quaternion.Euler(transform.eulerAngles.x, (unit.Attack.isRight ? 0f : 180f), transform.eulerAngles.z);
+
+        Rigid.velocity = knockback;
+
+
+        if (property.hitProperties.stun)
+            StartCoroutine(StunDelay(property.hitProperties.stuntime));
+        else
+            StartCoroutine(HitDelay(property.hitProperties.hitdelay));
     }
 
     #region Properties
@@ -179,6 +277,14 @@ public abstract class Unit : MonoBehaviour {
         get
         {
             return colliderctrl;
+        }
+    }
+
+    public bool Stuning
+    {
+        get
+        {
+            return stuning || hitdelay;
         }
     }
 

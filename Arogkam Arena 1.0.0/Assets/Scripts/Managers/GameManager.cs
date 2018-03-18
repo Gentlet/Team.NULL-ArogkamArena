@@ -1,14 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 [System.Serializable]
-public class AttackEffect
+public class Particle
 {
     [SerializeField]
     private string name;
     [SerializeField]
-    private GameObject particle;
+    private GameObject particleobj;
 
     #region Properties
     public string Name
@@ -19,41 +20,73 @@ public class AttackEffect
         }
     }
 
-    public GameObject Particle
+    public GameObject ParticleObj
     {
         get
         {
-            return particle;
+            return particleobj;
         }
     }
     #endregion
 }
 
-public class GameManager : SingletonGameObject<GameManager> {
+[System.Serializable]
+public class UIObject
+{
+    [SerializeField]
+    private string name;
+    [SerializeField]
+    private Image image;
 
+    #region Properties
+    public string Name
+    {
+        get
+        {
+            return name;
+        }
+    }
+
+    public Image Image
+    {
+        get
+        {
+            return image;
+        }
+    }
+    #endregion
+}
+
+public class GameManager : SingletonGameObject<GameManager>
+{
     [SerializeField]
     private Vector4 stagesize;
 
     [SerializeField]
-    private GameObject hitparticle;
+    private Particle[] particles;
 
     [SerializeField]
-    private AttackEffect[] attackparticle;
+    private UIObject[] uiobjects;
 
     [SerializeField]
     private BulletAttackReport bulletprefab;
 
     [SerializeField]
-    private GameObject bustmodparitcle;
+    private Sprite[] numbersprite;
 
     private Unit[] players;
 
     private List<AttackProperties[]> attackproperties;
 
+    private int timer = 99;
+
     private void Awake()
     {
         attackproperties = new List<AttackProperties[]>();
+
+        StartCoroutine(Timer());
     }
+
     public void SetPlayer(Unit unit)
     {
         if (players == null)
@@ -69,7 +102,7 @@ public class GameManager : SingletonGameObject<GameManager> {
 
     public Unit GetAnotherPlayer(string tag)
     {
-        if(players == null)
+        if (players == null)
         {
             Debug.LogError("'players' data is not defined in GameManager");
         }
@@ -91,15 +124,6 @@ public class GameManager : SingletonGameObject<GameManager> {
             Debug.LogError("tag is not correct in GameManager's GetAnotherPlayer Function");
 
         return null;
-    }
-
-    public void CreateHitParticle(Vector2 pos)
-    {
-        GameObject obj = Instantiate(hitparticle, transform);
-
-        obj.transform.position = pos + new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-1f, 1f));
-
-        StartCoroutine(DestroyObj(obj, 0.5f));
     }
 
     public void AttackPropertiesSet(string tag, AttackProperties[] properties)
@@ -134,7 +158,7 @@ public class GameManager : SingletonGameObject<GameManager> {
 
         for (int i = 0; i < attackproperties[num].Length; i++)
         {
-            if(attackproperties[num][i].name == name)
+            if (attackproperties[num][i].name == name)
             {
                 return attackproperties[num][i];
             }
@@ -145,6 +169,22 @@ public class GameManager : SingletonGameObject<GameManager> {
         return null;
     }
 
+    public GameObject CreateAttackParticle(string name, GameObject parent, float destroytime)
+    {
+        GameObject particle = GetParticle(name);
+
+        if (particle != null)
+        {
+            GameObject tmp = Instantiate(particle, parent.transform);
+
+            StartCoroutine(DestroyObj(tmp.gameObject, destroytime));
+            return tmp;
+        }
+
+        Debug.LogError(name + " is not correct in GameManager's CreateAttackParticle Function");
+        return null;
+    }
+
     public BulletAttackReport CreateBullet(Unit unit)
     {
         BulletAttackReport bullet = Instantiate(bulletprefab);
@@ -152,45 +192,28 @@ public class GameManager : SingletonGameObject<GameManager> {
 
         return bullet;
     }
-    
-    #region public_GameObject_CreateAttackParticle
-    public GameObject CreateAttackParticle(string name, float destroytime)
+
+    public void CreateHitParticle(Vector2 pos)
     {
-        for (int i = 0; i < attackparticle.Length; i++)
-        {
-            if (attackparticle[i].Name == name)
-            {
-                GameObject particle = Instantiate(attackparticle[i].Particle);
+        GameObject obj = Instantiate(GetParticle("Hit"), transform);
 
-                StartCoroutine(DestroyObj(particle.gameObject, destroytime));
-                return particle;
-            }
-        }
+        obj.transform.position = pos + new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-1f, 1f));
 
-        Debug.LogError(name + " is not correct in GameManager's CreateAttackParticle Function");
-        return null;
+        StartCoroutine(DestroyObj(obj, 0.5f));
     }
-    public GameObject CreateAttackParticle(string name, GameObject parent, float destroytime)
+
+    public GameObject CreateSunParticle(Unit unit)
     {
-        for (int i = 0; i < attackparticle.Length; i++)
-        {
-            if (attackparticle[i].Name == name)
-            {
-                GameObject particle = Instantiate(attackparticle[i].Particle, parent.transform);
+        GameObject obj = Instantiate(GetParticle("Stun"), unit.transform);
 
-                StartCoroutine(DestroyObj(particle.gameObject, destroytime));
-                return particle;
-            }
-        }
+        obj.transform.localPosition = new Vector3(0f, 0.8f, 0f);
 
-        Debug.LogError(name + " is not correct in GameManager's CreateAttackParticle Function");
-        return null;
+        return obj;
     }
-    #endregion
 
     public GameObject CreateBustModParticle(Unit unit)
     {
-        GameObject obj = Instantiate(bustmodparitcle, unit.transform);
+        GameObject obj = Instantiate(GetParticle("BustMod"), unit.transform);
 
         obj.tag = "BustMod";
         obj.transform.localPosition = new Vector3(0f, 0.5f, 0f);
@@ -202,20 +225,48 @@ public class GameManager : SingletonGameObject<GameManager> {
     {
         for (int i = 0; i < unit.transform.childCount; i++)
         {
-            if(unit.transform.GetChild(i).CompareTag("BustMod"))
+            if (unit.transform.GetChild(i).CompareTag("BustMod"))
             {
                 StartCoroutine(DestroyObj(unit.transform.GetChild(i).gameObject, 0f));
             }
         }
     }
 
+    public void SetFillAmount(string name, float value)
+    {
+        Image image = GetUIObject(name);
+
+        image.fillAmount = value;
+    }
+
     private IEnumerator DestroyObj(GameObject obj, float time)
     {
         yield return new WaitForSeconds(time);
 
-        Destroy(obj); 
+        Destroy(obj);
     }
 
+    private GameObject GetParticle(string name)
+    {
+        for (int i = 0; i < particles.Length; i++)
+        {
+            if (particles[i].Name == name)
+                return particles[i].ParticleObj;
+        }
+
+        return null;
+    }
+
+    private Image GetUIObject(string name)
+    {
+        for (int i = 0; i < uiobjects.Length; i++)
+        {
+            if (uiobjects[i].Name == name)
+                return uiobjects[i].Image;
+        }
+
+        return null;
+    }
 
     private void OnDrawGizmosSelected()
     {
@@ -224,6 +275,24 @@ public class GameManager : SingletonGameObject<GameManager> {
         Vector2 size = new Vector2((StageSize.z - middle.x) * 2, (StageSize.w - middle.y) * 2);
 
         Gizmos.DrawWireCube(middle, size);
+    }
+
+    private IEnumerator Timer()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+
+            if (timer != 0)
+            {
+                timer -= 1;
+
+                GetUIObject("10image").sprite = numbersprite[(timer / 10)];
+                GetUIObject("1image").sprite = numbersprite[(timer % 10)];
+            }
+            else
+                break;
+        }
     }
 
 
@@ -236,5 +305,5 @@ public class GameManager : SingletonGameObject<GameManager> {
             return stagesize;
         }
     }
-#endregion
+    #endregion
 }

@@ -1,4 +1,0 @@
-sceneSetups:
-- path: Assets/1_DelegateUsage/Scenes/DelegateUsageScene.unity
-  isLoaded: 1
-  isActive: 1

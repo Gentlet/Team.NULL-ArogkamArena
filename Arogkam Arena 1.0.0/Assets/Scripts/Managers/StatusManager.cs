@@ -7,8 +7,11 @@ public struct Status
 {
     [SerializeField]
     private string name;
+    [HideInInspector]
     public float hp;
-  //public float damage;
+    [HideInInspector]
+    public float stamina;
+
     public float speed;
 
     public float jump_force;

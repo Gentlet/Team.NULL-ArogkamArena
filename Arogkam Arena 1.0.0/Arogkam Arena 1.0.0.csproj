@@ -282,6 +282,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Managers\CameraManager.cs" />
     <Compile Include="Assets\Scripts\Managers\DebugManager\DebugManager.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\Scripts\Managers\KeyManager.cs" />

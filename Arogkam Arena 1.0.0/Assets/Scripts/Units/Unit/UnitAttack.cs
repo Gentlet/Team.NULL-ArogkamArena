@@ -8,6 +8,7 @@ public class HitProperties
     public Vector2 knockback;
     public float hitdelay;
     public bool stun;
+    public float stuntime;
 }
 
 [System.Serializable]
@@ -19,6 +20,8 @@ public class AttackProperties
     public float during;
     public int times;
     public float damage;
+
+    public float stamina;
 
     public HitProperties hitProperties;
 }
@@ -55,6 +58,9 @@ public abstract class UnitAttack : ChildUnitInterface
 
     protected virtual void Attack()
     {
+        if (Unit.Stuning)
+            return;
+
         if (isAttacking || isattackdelaying || Unit.Movement.isDefance || Unit.State == UnitState.Attack)
             return;
 
@@ -85,37 +91,32 @@ public abstract class UnitAttack : ChildUnitInterface
         #region KeyDown
         if (keys[(int)KeyArray.Weak] == keyState.KeyDown.ToChar())
         {
-            isattacking = true;
-            isattackdelaying = true;
-            Unit.State = UnitState.Attack;
+            if (!AttackSetting("WeakAttack" + weakattackcombo))
+                return;
         }
 
         if (keys[(int)KeyArray.Strong] == keyState.KeyDown.ToChar())
         {
-            isattacking = true;
-            isattackdelaying = true;
-            Unit.State = UnitState.Attack;
+            if (!AttackSetting("StrongAttack" + strongattackcombo))
+                return;
         }
 
         if (keys[(int)KeyArray.Skill1] == keyState.KeyDown.ToChar())
         {
-            isattacking = true;
-            isattackdelaying = true;
-            Unit.State = UnitState.Attack;
+            if (!AttackSetting("Skill1"))
+                return;
         }
 
         if (keys[(int)KeyArray.SKill2] == keyState.KeyDown.ToChar())
         {
-            isattacking = true;
-            isattackdelaying = true;
-            Unit.State = UnitState.Attack;
+            if (!AttackSetting("Skill2"))
+                return;
         }
 
-        if (keys[(int)KeyArray.special] == keyState.KeyDown.ToChar())
+        if (keys[(int)KeyArray.Special] == keyState.KeyDown.ToChar())
         {
-            isattacking = true;
-            isattackdelaying = true;
-            Unit.State = UnitState.Attack;
+            if (!AttackSetting("Special"))
+                return;
         }
         #endregion
 
@@ -136,10 +137,37 @@ public abstract class UnitAttack : ChildUnitInterface
         {
         }
 
-        if (keys[(int)KeyArray.special] == keyState.KeyUp.ToChar())
+        if (keys[(int)KeyArray.Special] == keyState.KeyUp.ToChar())
         {
         }
         #endregion
+    }
+
+    protected AttackProperties GetAttackpropertie(string name)
+    {
+        for (int i = 0; i < properties.Length; i++)
+        {
+            if (properties[i].name == name)
+                return properties[i];
+        }
+
+        return null;
+    }
+
+    protected bool AttackSetting(string attackname)
+    {
+        if(0 <= Unit.Status.stamina - GetAttackpropertie(attackname).stamina)
+        {
+            isattacking = true;
+            isattackdelaying = true;
+            Unit.State = UnitState.Attack;
+
+            Unit.UseStamina(GetAttackpropertie(attackname).stamina);
+
+            return true;
+        }
+
+        return false;
     }
 
     protected IEnumerator AccelerationDelay(Vector2 vel, float delay)

@@ -17,6 +17,9 @@ public class WesternAttack : UnitAttack
 
     protected override void Attack()
     {
+        if (Unit.Stuning)
+            return;
+
         if (isAttacking || isattackdelaying || Unit.Movement.isDefance || Unit.State == UnitState.Attack)
             return;
 
@@ -47,21 +50,23 @@ public class WesternAttack : UnitAttack
         #region KeyDown
         if (keys[(int)KeyArray.Weak] == keyState.KeyDown.ToChar())
         {
-            isattacking = true;
-            isattackdelaying = true;
-            Unit.State = UnitState.Attack;
-
             if (Unit.Movement.isJump)
             {
+                if (!AttackSetting("JumpAttack"))
+                    return;
+
                 Unit.Animator.PlayAnimation("JumpAttack");
                 Unit.ColliderCtrl.AttackColliderActive(properties[0]);
 
-                StartCoroutine(CreateBullet(new Vector2(-1f, -1f) * speed, new Vector2(-0.35f, 0.13f), 45f, 0.05f));
+                StartCoroutine(CreateBullet("JumpAttack", new Vector2(-1f, -1f) * speed, new Vector2(-0.35f, 0.13f), 45f, 0.05f));
 
                 StartCoroutine(AccelerationDelay(new Vector2(0,10f), 0f));
             }
             else if (Unit.Movement.isDash)
             {
+                if (!AttackSetting("DashAttack"))
+                    return;
+
                 Unit.Animator.PlayAnimation("DashAttack");
                 Unit.ColliderCtrl.AttackColliderActive(properties[1]);
 
@@ -75,6 +80,9 @@ public class WesternAttack : UnitAttack
             }
             else
             {
+                if (!AttackSetting("WeakAttack" + (weakattackcombo + 1)))
+                    return;
+
                 weakattackcombo += 1;
 
                 Unit.Animator.PlayAnimation("WeakAttack" + weakattackcombo.ToString());
@@ -87,24 +95,26 @@ public class WesternAttack : UnitAttack
 
         if (keys[(int)KeyArray.Strong] == keyState.KeyDown.ToChar())
         {
-            isattacking = true;
-            isattackdelaying = true;
-            Unit.State = UnitState.Attack;
-
             if (Unit.Movement.isDash && !Unit.Movement.isJump)
             {
+                if (!AttackSetting("DefanceBreak"))
+                    return;
+
                 Unit.Animator.PlayAnimation("DefanceBreak");
                 //Unit.ColliderCtrl.AttackColliderActive(properties[4]);
                 Debug.Log("방어깨기가 구현되어있지 않음");
             }
             else
             {
+                if (!AttackSetting("StrongAttack" + (strongattackcombo + 1)))
+                    return;
+
                 strongattackcombo += 1;
 
                 Unit.Animator.PlayAnimation("StrongAttack" + strongattackcombo.ToString());
                 Unit.ColliderCtrl.AttackColliderActive(properties[5]);
 
-                StartCoroutine(CreateBullet(new Vector2(-1f, 0) * speed, new Vector2(-1.1f * (isRight ? -1f : 1f), 0.37f), 0, 0.1f));
+                StartCoroutine(CreateBullet("StrongAttack" + strongattackcombo.ToString(), new Vector2(-1f, 0) * speed, new Vector2(-1.1f * (isRight ? -1f : 1f), 0.37f), 0, 0.1f));
 
                 if (strongattackcombo == EndofStrongCombo)
                     strongattackcombo = 0;
@@ -113,9 +123,8 @@ public class WesternAttack : UnitAttack
 
         if (keys[(int)KeyArray.Skill1] == keyState.KeyDown.ToChar())
         {
-            isattacking = true;
-            isattackdelaying = true;
-            Unit.State = UnitState.Attack;
+            if (!AttackSetting("Skill1"))
+                return;
 
             Unit.Animator.PlayAnimation("Skill1");
             Unit.ColliderCtrl.AttackColliderActive(properties[6]);
@@ -125,24 +134,22 @@ public class WesternAttack : UnitAttack
 
         if (keys[(int)KeyArray.SKill2] == keyState.KeyDown.ToChar())
         {
-            isattacking = true;
-            isattackdelaying = true;
-            Unit.State = UnitState.Attack;
+            if (!AttackSetting("Skill2"))
+                return;
 
             Unit.Animator.PlayAnimation("Skill2");
             Unit.ColliderCtrl.AttackColliderActive(properties[7]);
 
-            StartCoroutine(CreateBullet(new Vector2(-1f, 0) * speed, new Vector2(-0.7f, 0.35f), 0, 0.02f));
+            StartCoroutine(CreateBullet("Skill2", new Vector2(-1f, 0) * speed, new Vector2(-0.7f, 0.35f), 0, 0.02f));
 
             StartCoroutine(AccelerationDelay(new Vector2(15 * (isRight == true ? -1f : 1f), Unit.Rigid.velocity.y), 0f));
             
         }
 
-        if (keys[(int)KeyArray.special] == keyState.KeyDown.ToChar() && !Unit.Movement.isJump)
+        if (keys[(int)KeyArray.Special] == keyState.KeyDown.ToChar() && !Unit.Movement.isJump)
         {
-            isattacking = true;
-            isattackdelaying = true;
-            Unit.State = UnitState.Attack;
+            if (!AttackSetting("Special"))
+                return;
 
             Unit.Animator.PlayAnimation("Special");
             Unit.ColliderCtrl.AttackColliderActive(properties[8]);
@@ -172,11 +179,13 @@ public class WesternAttack : UnitAttack
         #endregion
     }
 
-    private IEnumerator CreateBullet(Vector2 direction, Vector2 pos,float rotation, float time)
+    private IEnumerator CreateBullet(string name, Vector2 direction, Vector2 pos,float rotation, float time)
     {
         yield return new WaitForSeconds(time);
 
         BulletAttackReport bullet = GameManager.Instance.CreateBullet(Unit);
+
+        bullet.gameObject.name = name;
 
         if (isRight)
             direction.x *= -1f;

@@ -13,7 +13,7 @@ public enum KeyArray
     Strong,
     Skill1,
     SKill2,
-    special,
+    Special,
 }
 
 public enum keyState
@@ -107,7 +107,7 @@ public class KeyManager : SingletonGameObject<KeyManager> {
 
         if (Input.GetKey(KeyCode.I))
         {
-            player1 = player1.Change((int)KeyArray.special, (int)keyState.KeyStay);
+            player1 = player1.Change((int)KeyArray.Special, (int)keyState.KeyStay);
         }
         #endregion
 
@@ -155,7 +155,7 @@ public class KeyManager : SingletonGameObject<KeyManager> {
 
         if (Input.GetKeyDown(KeyCode.I))
         {
-            player1 = player1.Change((int)KeyArray.special, (int)keyState.KeyDown);
+            player1 = player1.Change((int)KeyArray.Special, (int)keyState.KeyDown);
         }
         #endregion
 
@@ -203,7 +203,7 @@ public class KeyManager : SingletonGameObject<KeyManager> {
 
         if (Input.GetKeyUp(KeyCode.I))
         {
-            player1 = player1.Change((int)KeyArray.special, (int)keyState.KeyUp);
+            player1 = player1.Change((int)KeyArray.Special, (int)keyState.KeyUp);
         }
         #endregion
 

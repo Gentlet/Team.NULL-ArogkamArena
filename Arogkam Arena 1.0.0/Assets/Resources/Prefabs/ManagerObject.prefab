@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4891069832518694}
+  - component: {fileID: 114055168407042926}
   - component: {fileID: 114978194076866786}
   - component: {fileID: 114474539727510996}
   - component: {fileID: 114470254003948908}
@@ -43,6 +44,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114055168407042926
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1113290807548146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 551b3423afe257242900cb89cfcabac7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maincamera: {fileID: 0}
+  offset: {x: 0, y: 0}
+  smoothTime: {x: 0, y: 0}
+  activate: 1
 --- !u!114 &114185250392397896
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78,17 +94,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   status:
   - name: Custos
-    hp: 0
+    hp: 100
+    stamina: 0
     speed: 5
     jump_force: 25
+    bustmodstate: 0
   - name: KG
-    hp: 0
+    hp: 100
+    stamina: 0
     speed: 5
     jump_force: 25
+    bustmodstate: 0
   - name: Western
-    hp: 0
+    hp: 100
+    stamina: 0
     speed: 5
     jump_force: 25
+    bustmodstate: 0
 --- !u!114 &114978194076866786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -101,16 +123,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stagesize: {x: -18, y: -11, z: 18, w: 11}
-  hitparticle: {fileID: 1279200476476100, guid: 671f90d2cf06c4a4b8a3a163b8d9ec39,
-    type: 2}
-  attackparticle:
+  particles:
   - name: KG_Skill2_L
-    particle: {fileID: 1562689976297276, guid: b4185d695b46e594dbf8621aea5762f3, type: 2}
+    particleobj: {fileID: 1562689976297276, guid: b4185d695b46e594dbf8621aea5762f3,
+      type: 2}
   - name: KG_Skill2_R
-    particle: {fileID: 1562689976297276, guid: aa4fb09b888d3df41989b8781c3d5d52, type: 2}
+    particleobj: {fileID: 1562689976297276, guid: aa4fb09b888d3df41989b8781c3d5d52,
+      type: 2}
   - name: KG_Strong_L
-    particle: {fileID: 1587021277670980, guid: 0623784ebf03a4c42a82635f73c17f32, type: 2}
+    particleobj: {fileID: 1587021277670980, guid: 0623784ebf03a4c42a82635f73c17f32,
+      type: 2}
   - name: KG_Strong_R
-    particle: {fileID: 1587021277670980, guid: fbcf8ae31410ada49a9e26d8542aed8a, type: 2}
+    particleobj: {fileID: 1587021277670980, guid: fbcf8ae31410ada49a9e26d8542aed8a,
+      type: 2}
+  - name: BustMod
+    particleobj: {fileID: 1994136414254472, guid: 82a9583c3c32a6c4491fcef2025e498a,
+      type: 2}
+  - name: Hit
+    particleobj: {fileID: 1279200476476100, guid: 671f90d2cf06c4a4b8a3a163b8d9ec39,
+      type: 2}
+  - name: Stun
+    particleobj: {fileID: 1061387975348184, guid: 0349fc65967d37c47942e68ae9798203,
+      type: 2}
+  uiobjects:
+  - name: Player1Hp
+    image: {fileID: 0}
+  - name: Player1Stamina
+    image: {fileID: 0}
+  - name: Player2Hp
+    image: {fileID: 0}
+  - name: Player2Stamina
+    image: {fileID: 0}
+  - name: 1image
+    image: {fileID: 0}
+  - name: 10image
+    image: {fileID: 0}
   bulletprefab: {fileID: 114036228397230116, guid: dce5efc571ed66e4dbe8dd57b7322cb9,
     type: 2}
+  numbersprite:
+  - {fileID: 21300000, guid: 08b91669d9d887f4999ec1aa888b9090, type: 3}
+  - {fileID: 21300000, guid: 86e462690ead48b45a2f854c2cd2adfc, type: 3}
+  - {fileID: 21300000, guid: 3377a7070d6ef2b499a23d8715d7854b, type: 3}
+  - {fileID: 21300000, guid: 3bfc3846ce14ece459d8637c5b78b4bd, type: 3}
+  - {fileID: 21300000, guid: be116101f7829a0429042163a7675859, type: 3}
+  - {fileID: 21300000, guid: bc8e9b1e41719984fa701c2a12524c7a, type: 3}
+  - {fileID: 21300000, guid: f032b1465142379499934f5ab2d0e002, type: 3}
+  - {fileID: 21300000, guid: 7794ef6485fecf94d812f6088bd35330, type: 3}
+  - {fileID: 21300000, guid: d63c302bd7587f64d8a5431da7c3ad80, type: 3}
+  - {fileID: 21300000, guid: 2328612ba98d1614396cf1280b8a776d, type: 3}

@@ -14,6 +14,9 @@ public class CustosAttack : UnitAttack {
 
     protected override void Attack()
     {
+        if (Unit.Stuning)
+            return;
+
         if (isAttacking || isattackdelaying || Unit.Movement.isDefance || Unit.State == UnitState.Attack)
             return;
 
@@ -44,17 +47,19 @@ public class CustosAttack : UnitAttack {
         #region KeyDown
         if (keys[(int)KeyArray.Weak] == keyState.KeyDown.ToChar())
         {
-            isattacking = true;
-            isattackdelaying = true;
-            Unit.State = UnitState.Attack;
-            
             if (Unit.Movement.isJump)
             {
+                if (!AttackSetting("JumpAttack"))
+                    return;
+
                 Unit.Animator.PlayAnimation("JumpAttack");
                 Unit.ColliderCtrl.AttackColliderActive(properties[0]);
             }
             else if (Unit.Movement.isDash)
             {
+                if (!AttackSetting("DashAttack"))
+                    return;
+
                 Unit.Animator.PlayAnimation("DashAttack");
                 Unit.ColliderCtrl.AttackColliderActive(properties[1]);
 
@@ -67,7 +72,10 @@ public class CustosAttack : UnitAttack {
                 Unit.Movement.isDash = false;
             }
             else
-            { 
+            {
+                if (!AttackSetting("WeakAttack" + (weakattackcombo + 1)))
+                    return;
+
                 weakattackcombo += 1;
 
                 Unit.Animator.PlayAnimation("WeakAttack" + weakattackcombo.ToString());
@@ -80,12 +88,11 @@ public class CustosAttack : UnitAttack {
 
         if (keys[(int)KeyArray.Strong] == keyState.KeyDown.ToChar())
         {
-            isattacking = true;
-            isattackdelaying = true;
-            Unit.State = UnitState.Attack;
-
             if (Unit.Movement.isDash && !Unit.Movement.isJump)
             {
+                if (!AttackSetting("DefanceBreak"))
+                    return;
+
                 Unit.Animator.PlayAnimation("DefanceBreak");
                 Unit.ColliderCtrl.AttackColliderActive(properties[5]);
 
@@ -99,6 +106,9 @@ public class CustosAttack : UnitAttack {
             }
             else
             {
+                if (!AttackSetting("StrongAttack" + (strongattackcombo + 1)))
+                    return;
+
                 strongattackcombo += 1;
 
                 Unit.Animator.PlayAnimation("StrongAttack" + strongattackcombo.ToString());
@@ -111,9 +121,8 @@ public class CustosAttack : UnitAttack {
 
         if (keys[(int)KeyArray.Skill1] == keyState.KeyDown.ToChar())
         {
-            isattacking = true;
-            isattackdelaying = true;
-            Unit.State = UnitState.Attack;
+            if (!AttackSetting("Skill1"))
+                return;
 
             Unit.Animator.PlayAnimation("Skill1");
             Unit.ColliderCtrl.AttackColliderActive(properties[7]);
@@ -123,9 +132,8 @@ public class CustosAttack : UnitAttack {
 
         if (keys[(int)KeyArray.SKill2] == keyState.KeyDown.ToChar())
         {
-            isattacking = true;
-            isattackdelaying = true;
-            Unit.State = UnitState.Attack;
+            if (!AttackSetting("Skill2"))
+                return;
 
             Unit.Animator.PlayAnimation("Skill2");
             Unit.ColliderCtrl.AttackColliderActive(properties[8]);
@@ -133,11 +141,10 @@ public class CustosAttack : UnitAttack {
             Unit.Rigid.velocity = new Vector2(6f * (isRight ? 1 : -1), 18f);
         }
 
-        if (keys[(int)KeyArray.special] == keyState.KeyDown.ToChar() && !Unit.Movement.isJump)
+        if (keys[(int)KeyArray.Special] == keyState.KeyDown.ToChar() && !Unit.Movement.isJump)
         {
-            isattacking = true;
-            isattackdelaying = true;
-            Unit.State = UnitState.Attack;
+            if (!AttackSetting("Special"))
+                return;
 
             Unit.Animator.PlayAnimation("Special");
             Unit.ColliderCtrl.AttackColliderActive(properties[9]);

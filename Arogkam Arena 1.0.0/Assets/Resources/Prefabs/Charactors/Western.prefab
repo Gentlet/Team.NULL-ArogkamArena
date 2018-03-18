@@ -602,7 +602,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1733463002082518}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.58, y: 0, z: 0}
+  m_LocalPosition: {x: 7, y: -2.5, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4832843119755518}
@@ -1912,90 +1912,108 @@ MonoBehaviour:
     during: 0
     times: 1
     damage: 0
+    stamina: 0
     hitProperties:
       knockback: {x: 0, y: 0}
       hitdelay: 0
       stun: 0
+      stuntime: 0
   - name: DashAttack
     fdelay: 0
     delay: 0.3
     during: 0
     times: 1
     damage: 0
+    stamina: 0
     hitProperties:
       knockback: {x: 0, y: 0}
       hitdelay: 0
       stun: 0
+      stuntime: 0
   - name: WeakAttack1
     fdelay: 0
     delay: 0.3
     during: 0
     times: 1
     damage: 0
+    stamina: 0
     hitProperties:
       knockback: {x: 0, y: 0}
       hitdelay: 0
       stun: 0
+      stuntime: 0
   - name: WeakAttack2
     fdelay: 0
     delay: 0.3
     during: 0
     times: 1
     damage: 0
+    stamina: 0
     hitProperties:
       knockback: {x: 0, y: 0}
       hitdelay: 0
       stun: 0
+      stuntime: 0
   - name: DefanceBreak
     fdelay: 0
     delay: 0.3
     during: 0
     times: 1
     damage: 0
+    stamina: 0
     hitProperties:
       knockback: {x: 0, y: 0}
       hitdelay: 0
       stun: 0
+      stuntime: 0
   - name: StrongAttack1
     fdelay: 0
     delay: 0.3
     during: 0
     times: 1
-    damage: 0
+    damage: 40
+    stamina: 0
     hitProperties:
-      knockback: {x: 0, y: 0}
-      hitdelay: 0
+      knockback: {x: 1, y: 1}
+      hitdelay: 2
       stun: 0
+      stuntime: 2
   - name: Skill1
     fdelay: 0
     delay: 0.3
     during: 0
     times: 1
     damage: 0
+    stamina: 0
     hitProperties:
       knockback: {x: 0, y: 0}
       hitdelay: 0
       stun: 0
+      stuntime: 0
   - name: Skill2
     fdelay: 0
     delay: 0.5
     during: 0
     times: 1
     damage: 0
+    stamina: 0
     hitProperties:
       knockback: {x: 0, y: 0}
       hitdelay: 0
       stun: 0
+      stuntime: 0
   - name: Special
     fdelay: 0
     delay: 0.3
     during: 0
     times: 1
     damage: 0
+    stamina: 0
     hitProperties:
       knockback: {x: 0, y: 0}
       hitdelay: 0
       stun: 0
+      stuntime: 0
   isattacking: 0
   isattackdelaying: 0
   speed: 20
