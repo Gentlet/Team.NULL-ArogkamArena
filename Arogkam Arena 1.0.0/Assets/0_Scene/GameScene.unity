@@ -676,7 +676,7 @@ Prefab:
     - target: {fileID: 114978194076866786, guid: 45fa5c46b2aed82408839f2f0ddba8ea,
         type: 2}
       propertyPath: MimeManPrefab.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4891069832518694, guid: 45fa5c46b2aed82408839f2f0ddba8ea, type: 2}
       propertyPath: m_LocalPosition.x
@@ -750,6 +750,12 @@ Prefab:
       propertyPath: MimeManPrefab.Array.data[0]
       value: 
       objectReference: {fileID: 114105366402180840, guid: 1b0cffca4c63bd74fa8a6f0253003d2a,
+        type: 2}
+    - target: {fileID: 114978194076866786, guid: 45fa5c46b2aed82408839f2f0ddba8ea,
+        type: 2}
+      propertyPath: MimeManPrefab.Array.data[1]
+      value: 
+      objectReference: {fileID: 114889000013579830, guid: 0cdf21f53fea1da4482d59d578bac67e,
         type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 45fa5c46b2aed82408839f2f0ddba8ea, type: 2}

@@ -91,6 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackType: Skill1
   time: 0
+  speed: 0
 --- !u!212 &212698378428387850
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -124,7 +125,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 32
   m_Sprite: {fileID: 21300000, guid: 408d970deb0ea0843b31bf08b4d7446d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

@@ -142,6 +142,9 @@ public class MimeManAttack : UnitAttack
 
             Unit.Animator.PlayAnimation("Special");
             Unit.ColliderCtrl.AttackColliderActive(GetProperty("Special"));
+
+            MimeManAttackObjects obj = GameManager.Instance.CreateMimeManAttackObj(Unit, 1);
+            obj.transform.position = (Vector2)transform.position + new Vector2(-0.55f, -0.55f);
         }
         #endregion
 
