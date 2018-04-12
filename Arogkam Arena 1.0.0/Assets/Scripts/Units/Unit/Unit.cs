@@ -40,6 +40,7 @@ public abstract class Unit : MonoBehaviour
 
     protected bool stuning;
     protected bool hitdelay;
+    protected bool invincibility;
 
     private Coroutine chargedelay;
     private Coroutine charge;
@@ -285,6 +286,18 @@ public abstract class Unit : MonoBehaviour
         get
         {
             return stuning || hitdelay;
+        }
+    }
+
+    public bool Invincibility
+    {
+        get
+        {
+            return invincibility;
+        }
+        set
+        {
+            invincibility = value;
         }
     }
 

@@ -72,6 +72,9 @@ public class GameManager : SingletonGameObject<GameManager>
     private BulletAttackReport bulletprefab;
 
     [SerializeField]
+    private MimeManAttackObjects[] MimeManPrefab;
+
+    [SerializeField]
     private Sprite[] numbersprite;
 
     private Unit[] players;
@@ -169,13 +172,13 @@ public class GameManager : SingletonGameObject<GameManager>
         return null;
     }
 
-    public GameObject CreateAttackParticle(string name, GameObject parent, float destroytime)
+    public GameObject CreateAttackParticle(string name, Transform parent, float destroytime)
     {
         GameObject particle = GetParticle(name);
 
         if (particle != null)
         {
-            GameObject tmp = Instantiate(particle, parent.transform);
+            GameObject tmp = Instantiate(particle, transform);
 
             StartCoroutine(DestroyObj(tmp.gameObject, destroytime));
             return tmp;
@@ -191,6 +194,14 @@ public class GameManager : SingletonGameObject<GameManager>
         bullet.SetUnit(unit);
 
         return bullet;
+    }
+
+    public MimeManAttackObjects CreateMimeManAttackObj(Unit unit, int num)
+    {
+        MimeManAttackObjects obj = Instantiate(MimeManPrefab[num]);
+        obj.Unit = unit;
+
+        return obj;
     }
 
     public void CreateHitParticle(Vector2 pos)

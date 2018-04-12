@@ -56,7 +56,7 @@ public class WesternAttack : UnitAttack
                     return;
 
                 Unit.Animator.PlayAnimation("JumpAttack");
-                Unit.ColliderCtrl.AttackColliderActive(properties[0]);
+                Unit.ColliderCtrl.AttackColliderActive(GetProperty("JumpAttack"));
 
                 StartCoroutine(CreateBullet("JumpAttack", new Vector2(-1f, -1f) * speed, new Vector2(-0.35f, 0.13f), 45f, 0.05f));
 
@@ -68,7 +68,7 @@ public class WesternAttack : UnitAttack
                     return;
 
                 Unit.Animator.PlayAnimation("DashAttack");
-                Unit.ColliderCtrl.AttackColliderActive(properties[1]);
+                Unit.ColliderCtrl.AttackColliderActive(GetProperty("DashAttack"));
 
                 Vector2 vel = Unit.Rigid.velocity;
 
@@ -86,7 +86,7 @@ public class WesternAttack : UnitAttack
                 weakattackcombo += 1;
 
                 Unit.Animator.PlayAnimation("WeakAttack" + weakattackcombo.ToString());
-                Unit.ColliderCtrl.AttackColliderActive(properties[1 + weakattackcombo]);
+                Unit.ColliderCtrl.AttackColliderActive(GetProperty("WeakAttack" + weakattackcombo.ToString()));
 
                 if (weakattackcombo == EndofWeakCombo)
                     weakattackcombo = 0;
@@ -112,7 +112,7 @@ public class WesternAttack : UnitAttack
                 strongattackcombo += 1;
 
                 Unit.Animator.PlayAnimation("StrongAttack" + strongattackcombo.ToString());
-                Unit.ColliderCtrl.AttackColliderActive(properties[5]);
+                Unit.ColliderCtrl.AttackColliderActive(GetProperty("StrongAttack" + strongattackcombo.ToString()));
 
                 StartCoroutine(CreateBullet("StrongAttack" + strongattackcombo.ToString(), new Vector2(-1f, 0) * speed, new Vector2(-1.1f * (isRight ? -1f : 1f), 0.37f), 0, 0.1f));
 
@@ -127,7 +127,7 @@ public class WesternAttack : UnitAttack
                 return;
 
             Unit.Animator.PlayAnimation("Skill1");
-            Unit.ColliderCtrl.AttackColliderActive(properties[6]);
+            Unit.ColliderCtrl.AttackColliderActive(GetProperty("Skill1"));
 
             //StartCoroutine(AccelerationDelay(new Vector2(0, 23), 0.2f));
         }
@@ -138,7 +138,7 @@ public class WesternAttack : UnitAttack
                 return;
 
             Unit.Animator.PlayAnimation("Skill2");
-            Unit.ColliderCtrl.AttackColliderActive(properties[7]);
+            Unit.ColliderCtrl.AttackColliderActive(GetProperty("Skill2"));
 
             StartCoroutine(CreateBullet("Skill2", new Vector2(-1f, 0) * speed, new Vector2(-0.7f, 0.35f), 0, 0.02f));
 
@@ -152,7 +152,7 @@ public class WesternAttack : UnitAttack
                 return;
 
             Unit.Animator.PlayAnimation("Special");
-            Unit.ColliderCtrl.AttackColliderActive(properties[8]);
+            Unit.ColliderCtrl.AttackColliderActive(GetProperty("Special"));
         }
         #endregion
 

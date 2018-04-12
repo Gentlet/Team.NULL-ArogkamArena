@@ -293,6 +293,10 @@
     <Compile Include="Assets\Scripts\Units\Characters\KG\KG.cs" />
     <Compile Include="Assets\Scripts\Units\Characters\KG\KGAttack.cs" />
     <Compile Include="Assets\Scripts\Units\Characters\KG\KGMovement.cs" />
+    <Compile Include="Assets\Scripts\Units\Characters\MimeMan\MimeMan.cs" />
+    <Compile Include="Assets\Scripts\Units\Characters\MimeMan\MimeManAttack.cs" />
+    <Compile Include="Assets\Scripts\Units\Characters\MimeMan\MimeManAttackObjects.cs" />
+    <Compile Include="Assets\Scripts\Units\Characters\MimeMan\MimeManMovement.cs" />
     <Compile Include="Assets\Scripts\Units\Characters\Western\Bullet\BulletAttackReport.cs" />
     <Compile Include="Assets\Scripts\Units\Characters\Western\Western.cs" />
     <Compile Include="Assets\Scripts\Units\Characters\Western\WesternAttack.cs" />

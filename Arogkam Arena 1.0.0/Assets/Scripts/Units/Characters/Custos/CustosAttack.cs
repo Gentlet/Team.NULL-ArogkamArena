@@ -53,7 +53,7 @@ public class CustosAttack : UnitAttack {
                     return;
 
                 Unit.Animator.PlayAnimation("JumpAttack");
-                Unit.ColliderCtrl.AttackColliderActive(properties[0]);
+                Unit.ColliderCtrl.AttackColliderActive(GetProperty("JumpAttack"));
             }
             else if (Unit.Movement.isDash)
             {
@@ -61,7 +61,7 @@ public class CustosAttack : UnitAttack {
                     return;
 
                 Unit.Animator.PlayAnimation("DashAttack");
-                Unit.ColliderCtrl.AttackColliderActive(properties[1]);
+                Unit.ColliderCtrl.AttackColliderActive(GetProperty("DashAttack"));
 
                 Vector2 vel = Unit.Rigid.velocity;
 
@@ -79,7 +79,7 @@ public class CustosAttack : UnitAttack {
                 weakattackcombo += 1;
 
                 Unit.Animator.PlayAnimation("WeakAttack" + weakattackcombo.ToString());
-                Unit.ColliderCtrl.AttackColliderActive(properties[1 + weakattackcombo]);
+                Unit.ColliderCtrl.AttackColliderActive(GetProperty("WeakAttack" + weakattackcombo.ToString()));
 
                 if (weakattackcombo == EndofWeakCombo)
                     weakattackcombo = 0;
@@ -94,7 +94,7 @@ public class CustosAttack : UnitAttack {
                     return;
 
                 Unit.Animator.PlayAnimation("DefanceBreak");
-                Unit.ColliderCtrl.AttackColliderActive(properties[5]);
+                Unit.ColliderCtrl.AttackColliderActive(GetProperty("DefanceBreak"));
 
                 Vector2 vel = Unit.Rigid.velocity;
 
@@ -112,7 +112,7 @@ public class CustosAttack : UnitAttack {
                 strongattackcombo += 1;
 
                 Unit.Animator.PlayAnimation("StrongAttack" + strongattackcombo.ToString());
-                Unit.ColliderCtrl.AttackColliderActive(properties[6]);
+                Unit.ColliderCtrl.AttackColliderActive(GetProperty("StrongAttack" + strongattackcombo.ToString()));
 
                 if (strongattackcombo == EndofStrongCombo)
                     strongattackcombo = 0;
@@ -125,7 +125,7 @@ public class CustosAttack : UnitAttack {
                 return;
 
             Unit.Animator.PlayAnimation("Skill1");
-            Unit.ColliderCtrl.AttackColliderActive(properties[7]);
+            Unit.ColliderCtrl.AttackColliderActive(GetProperty("Skill1"));
 
             StartCoroutine(AccelerationDelay(new Vector2(0, 23), 0.2f));
         }
@@ -136,7 +136,7 @@ public class CustosAttack : UnitAttack {
                 return;
 
             Unit.Animator.PlayAnimation("Skill2");
-            Unit.ColliderCtrl.AttackColliderActive(properties[8]);
+            Unit.ColliderCtrl.AttackColliderActive(GetProperty("Skill2"));
 
             Unit.Rigid.velocity = new Vector2(6f * (isRight ? 1 : -1), 18f);
         }
@@ -147,7 +147,7 @@ public class CustosAttack : UnitAttack {
                 return;
 
             Unit.Animator.PlayAnimation("Special");
-            Unit.ColliderCtrl.AttackColliderActive(properties[9]);
+            Unit.ColliderCtrl.AttackColliderActive(GetProperty("Special"));
 
             Vector2 pos = transform.position;
 

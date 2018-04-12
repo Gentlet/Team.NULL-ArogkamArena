@@ -36,7 +36,7 @@ public abstract class UnitAttack : ChildUnitInterface
     protected int EndofStrongCombo;
 
     [SerializeField]
-    protected AttackProperties[] properties;
+    private AttackProperties[] properties;
 
     protected int weakattackcombo;
     protected int strongattackcombo;
@@ -190,10 +190,22 @@ public abstract class UnitAttack : ChildUnitInterface
         if (strongtmp == strongattackcombo)
             strongattackcombo = 0;
     }
+
+    protected AttackProperties GetProperty(string name)
+    {
+        for (int i = 0; i < properties.Length; i++)
+        {
+            if (name == properties[i].name)
+                return properties[i];
+        }
+
+        return null;
+    }
     
     public virtual void AttackAnimationIsEnd()
     {
         isattacking = false;
+        Unit.Invincibility = false;
 
         if (0 < weakattackcombo + strongattackcombo)
         {

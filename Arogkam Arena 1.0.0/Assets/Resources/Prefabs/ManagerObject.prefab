@@ -151,6 +151,9 @@ MonoBehaviour:
   - name: Stun
     particleobj: {fileID: 1061387975348184, guid: 0349fc65967d37c47942e68ae9798203,
       type: 2}
+  - name: MimeMan
+    particleobj: {fileID: 1613331778660340, guid: 5d77eaf79826d254da4d9d1d0d551ecc,
+      type: 2}
   uiobjects:
   - name: Player1Hp
     image: {fileID: 0}

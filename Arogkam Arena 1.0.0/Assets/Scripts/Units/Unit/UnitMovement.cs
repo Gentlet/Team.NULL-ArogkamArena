@@ -48,7 +48,7 @@ public abstract class UnitMovement : ChildUnitInterface
 
     }
 
-    protected void Movement()
+    protected virtual void Movement()
     {
         if (Unit.Stuning)
             return;
@@ -176,7 +176,7 @@ public abstract class UnitMovement : ChildUnitInterface
         Unit.Rigid.velocity = vel;
     }
 
-    private IEnumerator IsRunReset()
+    protected virtual IEnumerator IsRunReset()
     {
         yield return new WaitForSeconds(0.3f);
 

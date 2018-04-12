@@ -57,7 +57,7 @@ public class KGAttack : UnitAttack
                     return;
 
                 Unit.Animator.PlayAnimation("JumpAttack");
-                Unit.ColliderCtrl.AttackColliderActive(properties[0]);
+                Unit.ColliderCtrl.AttackColliderActive(GetProperty("JumpAttack"));
 
                 Vector2 vel = Unit.Rigid.velocity;
                 vel.y = -10f;
@@ -70,7 +70,7 @@ public class KGAttack : UnitAttack
                     return;
 
                 Unit.Animator.PlayAnimation("DashAttack");
-                Unit.ColliderCtrl.AttackColliderActive(properties[1]);
+                Unit.ColliderCtrl.AttackColliderActive(GetProperty("DashAttack"));
 
                 Vector2 vel = Unit.Rigid.velocity;
                 vel.x = 20f * (isRight ? 1 : -1);
@@ -85,7 +85,7 @@ public class KGAttack : UnitAttack
                 weakattackcombo += 1;
 
                 Unit.Animator.PlayAnimation("WeakAttack" + weakattackcombo.ToString());
-                Unit.ColliderCtrl.AttackColliderActive(properties[1 + weakattackcombo]);
+                Unit.ColliderCtrl.AttackColliderActive(GetProperty("WeakAttack" + weakattackcombo.ToString()));
 
                 if (weakattackcombo == EndofWeakCombo)
                     weakattackcombo = 0;
@@ -111,9 +111,9 @@ public class KGAttack : UnitAttack
                 strongattackcombo += 1;
 
                 Unit.Animator.PlayAnimation("StrongAttack" + strongattackcombo.ToString());
-                Unit.ColliderCtrl.AttackColliderActive(properties[5]);
+                Unit.ColliderCtrl.AttackColliderActive(GetProperty("StrongAttack" + strongattackcombo.ToString()));
 
-                GameObject obj = GameManager.Instance.CreateAttackParticle("KG_Strong_" + (isRight ? "R" : "L"), gameObject, 0.5f);
+                GameObject obj = GameManager.Instance.CreateAttackParticle("KG_Strong_" + (isRight ? "R" : "L"), transform, 0.5f);
 
                 obj.transform.localPosition = new Vector3(-1f, 0.15f, -0.05f);
 
@@ -131,7 +131,7 @@ public class KGAttack : UnitAttack
             Vector2 vel = Unit.Rigid.velocity;
             vel.x = 25f * (isRight ? 1 : -1);
             Unit.Rigid.velocity = vel;
-            Unit.ColliderCtrl.AttackColliderActive(properties[6]);
+            Unit.ColliderCtrl.AttackColliderActive(GetProperty("Skill1"));
         }
 
         if (keys[(int)KeyArray.SKill2] == keyState.KeyDown.ToChar())
@@ -142,7 +142,7 @@ public class KGAttack : UnitAttack
             StartCoroutine(Skill2AttackEffect());
 
             Unit.Animator.PlayAnimation("Skill2");
-            Unit.ColliderCtrl.AttackColliderActive(properties[7]);
+            Unit.ColliderCtrl.AttackColliderActive(GetProperty("Skill2"));
         }
 
         if (keys[(int)KeyArray.Special] == keyState.KeyDown.ToChar())
@@ -151,7 +151,7 @@ public class KGAttack : UnitAttack
                 return;
 
             Unit.Animator.PlayAnimation("Special");
-            Unit.ColliderCtrl.AttackColliderActive(properties[8]);
+            Unit.ColliderCtrl.AttackColliderActive(GetProperty("Special"));
         }
         #endregion
 
@@ -182,7 +182,7 @@ public class KGAttack : UnitAttack
     {
         yield return new WaitForSeconds(0.1f);
 
-        GameObject obj = GameManager.Instance.CreateAttackParticle("KG_Skill2_" + (isRight ? "R" : "L"), gameObject, 0.5f);
+        GameObject obj = GameManager.Instance.CreateAttackParticle("KG_Skill2_" + (isRight ? "R" : "L"), transform, 0.5f);
 
         obj.transform.localPosition = new Vector3(-1.1f, -0.25f, -0.05f);
     }
