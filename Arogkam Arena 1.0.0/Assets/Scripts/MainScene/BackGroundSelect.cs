@@ -26,6 +26,8 @@ public class BackGroundSelect : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (CS.situation != 2)
+            return;
         if (CanChoice == true && PointNum > 0 && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))) PointerSet(-1);
         if (CanChoice == true && PointNum < Maps.Length - 1 && (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))) PointerSet(1);
 
@@ -34,7 +36,7 @@ public class BackGroundSelect : MonoBehaviour {
         {
             CanChoice = false;
             charsel.PointerReSet();
-          //  CS.BackGame();
+          
         }
 
     }
@@ -56,6 +58,7 @@ public class BackGroundSelect : MonoBehaviour {
 
     void ChoiceEnd()
     {
+        SelectDataManager.instance.Map = PointNum;
         CanChoice = false;
         SceneManager.LoadScene("GameScene");
     }

@@ -8,6 +8,7 @@ public class ChangeScene : MonoBehaviour {
     public GameObject GO;
     RectTransform RT;
     public Characterselect CS;
+    public Animator anitor;
     public int situation; // 0 메인 화면
                           // 1 캐릭터 선택
                           // 2 맵 선택
@@ -20,8 +21,9 @@ public class ChangeScene : MonoBehaviour {
             if (CS.Player1p || CS.Player2p)
                 return;
         situation += 1;
-        GO.GetComponent<Rigidbody2D>().AddForce(new Vector2(-50000, 0));
-        Invoke("StopMove", 1f);
+        anitor.SetInteger("situation", situation);
+       //     GO.GetComponent<Rigidbody2D>().AddForce(new Vector2(-50000, 0));
+      //  Invoke("StopMove", 1f);
         
 
     }
@@ -36,15 +38,15 @@ public class ChangeScene : MonoBehaviour {
             return;
      if(GO.transform.localPosition.x > 0 && situation == 0)
         {
-            GO.transform.localPosition = new Vector3();
+        //    GO.transform.localPosition = new Vector3();
         }
      else if(RT.localPosition.x < -2292.982 && situation == 1)
         {
-            RT.localPosition = new Vector3(x: -2292.982f, y: 0, z: 0);
+          //  RT.localPosition = new Vector3(x: -2292.982f, y: 0, z: 0);
         }
      else if(RT.localPosition.x > -2292.982 && situation == 1)
         {
-            GO.GetComponent<Rigidbody2D>().AddForce(new Vector2(-5, 0));
+        //    GO.GetComponent<Rigidbody2D>().AddForce(new Vector2(-5, 0));
         }
         //  -2292.982
     }
@@ -52,9 +54,10 @@ public class ChangeScene : MonoBehaviour {
     {
         if (situation <= 0)
             return;
-        GO.GetComponent<Rigidbody2D>().AddForce(new Vector2(50000, 0));
-        Invoke("StopMove", 1f);
+        //GO.GetComponent<Rigidbody2D>().AddForce(new Vector2(50000, 0));
+        //Invoke("StopMove", 1f);
         situation -= 1;
+        anitor.SetInteger("situation", situation);
     }
 
     public void StopMove()

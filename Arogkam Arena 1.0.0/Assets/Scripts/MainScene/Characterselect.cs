@@ -56,6 +56,8 @@ public class Characterselect : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        if (CS.situation != 1)
+            return;
         if (Player1 && Input.GetKeyDown(KeyCode.A) && PointersCharacter1p > 0) PointerStting(Pointer_1p, --PointersCharacter1p, 1);
         if (Player1 && Input.GetKeyDown(KeyCode.D) && PointersCharacter1p < Characters.Length - 1) PointerStting(Pointer_1p, ++PointersCharacter1p, 1);
 
@@ -67,6 +69,8 @@ public class Characterselect : MonoBehaviour {
 
         if (Player2 && (Input.GetKeyDown(KeyCode.Keypad8)|| Input.GetKeyDown(KeyCode.JoystickButton0))) CharacterChoiceEffect(Player2Img, PointersCharacter2p, 2);
 
+        if (Player1 == false && Player2 == false)
+            CharacterSelectEnd();
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             CS.BackGame();
@@ -142,11 +146,14 @@ public class Characterselect : MonoBehaviour {
 
     public void CharacterSelectEnd()
     {
+     //   Debug.Log("");
         SoundManager.instance.PlayChoice();
-
-        Player1 = false;
-        Player2 = false;
-
+        CS.LoadGame();
+        Player1 = true;
+        Player2 = true;
+        SelectDataManager.instance.Player1Char = PointersCharacter1p;
+        SelectDataManager.instance.Player2Char = PointersCharacter2p;
+        Select.StartBackGroundChoice();
     }
 
     void CharacterChoiceEffect(Image img,int pointer,int player)

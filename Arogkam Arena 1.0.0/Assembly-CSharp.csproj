@@ -62,6 +62,7 @@
     <Compile Include="Assets\Scripts\MainScene\BackGroundSelect.cs" />
     <Compile Include="Assets\Scripts\MainScene\ChangeScene.cs" />
     <Compile Include="Assets\Scripts\MainScene\Characterselect.cs" />
+    <Compile Include="Assets\Scripts\MainScene\SelectDataManager.cs" />
     <Compile Include="Assets\Scripts\Managers\CameraManager.cs" />
     <Compile Include="Assets\Scripts\Managers\DebugManager\DebugManager.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
@@ -81,6 +82,8 @@
     <Compile Include="Assets\Scripts\Units\Characters\Western\Western.cs" />
     <Compile Include="Assets\Scripts\Units\Characters\Western\WesternAttack.cs" />
     <Compile Include="Assets\Scripts\Units\Characters\Western\WesternMovement.cs" />
+    <Compile Include="Assets\Scripts\Units\Extras\Crowd.cs" />
+    <Compile Include="Assets\Scripts\Units\Extras\SibaDog.cs" />
     <Compile Include="Assets\Scripts\Units\Unit\Unit.cs" />
     <Compile Include="Assets\Scripts\Units\Unit\UnitAnimator.cs" />
     <Compile Include="Assets\Scripts\Units\Unit\UnitAttack.cs" />
