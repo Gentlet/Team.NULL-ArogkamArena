@@ -60,6 +60,7 @@ public class BackGroundSelect : MonoBehaviour {
     {
         SelectDataManager.instance.Map = PointNum;
         CanChoice = false;
-        SceneManager.LoadScene("GameScene");
+        SelectDataManager.instance.MoveToGameScene();
+       // SceneManager.LoadScene("GameScene");
     }
 }
